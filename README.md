@@ -15,6 +15,8 @@ val array2 = Array(5) { it } //Array 생성자
 
 배열은 같은 자료형의 변수로 이루어진 구성요소이다.
 
+코틀린에서 그냥 array는 다양한 자료형이 들어갈 수 있다.
+
 코틀린에는 원시 타입 + Array의 자료형이 존재한다. 하지만 Array<자료형>과 연관 관계는 없다.
 
 Array의 생성자는 size, init(람다)이다.
@@ -114,5 +116,67 @@ fun translateCardinalNumber(num: Int, cardinalNumber: Int): String {
 
 ### 소수의 나열
 
-어떤 수 N은 N-1까지 아무 소수로도 나누어떨어지지 않으면 소수이다.
+```kotlin
+fun getPrimeNumbers(target: Int): IntArray {
+    var primeArray = intArrayOf()
+    for (num in 2..target) {
+        for (i in 2..num) {
+            if (i == num) primeArray += num
+            if (num % i == 0) break
+        }
+    }
+    return primeArray
+}
+```
+
+어떤 수 N은 2부터 N-1까지 어떤 수로도 나누어 떨어지지 않으면 소수이다.
+
+```kotlin
+fun getPrimeNumbers(target: Int): IntArray {
+    var primeArray = intArrayOf(2)
+    for (num in 2..target) {
+        for (i in primeArray.indices) {
+            if (num % primeArray[i] == 0) break
+            if (i == primeArray.lastIndex) primeArray += num
+        }
+    }
+    return primeArray
+}
+```
+
+(개선1) 어떤 수 N은 N-1까지 어떤 소수로도 나누어 떨어지지 않으면 소수이다.
+
+```kotlin
+fun getPrimeNumbers(target: Int): IntArray {
+    var primeArray = intArrayOf(2)
+    for (num in 3..target step 2) { //소수는 2를 제외하면 모두 홀수이므로 홀수만 검사
+        for (i in primeArray) {
+            if (num % i == 0) break
+            if (i*i >= num){
+                primeArray+=num
+                break
+            }
+        } 
+    }
+    return primeArray
+}
+```
+
+(개선2) 어떤 수 N은 N의 제곱근까지의 어떤 소수로도 나누어 떨어지지 않으면 소수이다.
+
+### 경과 일 수 구하기
+
+```kotlin
+fun getDayUntilNow(isLeap: Boolean, month: Int, day: Int): Int {
+    val daysOfYear = arrayOf(
+        intArrayOf(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31),
+        intArrayOf(31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31))
+    val thisYear=if (isLeap) daysOfYear[0] else daysOfYear[1]
+    return thisYear.filterIndexed { index, _ -> index < month - 1 }.sum() + day
+}
+```
+
+다차원 배열로 각 일 수를 윤년, 평년 별로 저장
+
+n-1개월까지 월 수 더한 뒤 일 수 더한 후 반환
 
