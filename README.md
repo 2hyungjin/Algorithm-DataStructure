@@ -279,5 +279,70 @@ intArrayOf(1,5,6).binarySearch(5)
 
 -실패한 경우 key보다 큰 요소 중 첫번째 + -1을 반환합니다. (모두 key보다 작다면 -배열의 길이 -1)
 
-## 스택과 큐
+## 스택
+
+```kotlin
+class IntStack(capacity: Int) {
+  	//용량
+    var max: Int = capacity
+		//top
+  	var ptr: Int = 0
+  	//stack
+    var stk: IntArray = IntArray(max)
+
+    //실행 시 예외 (스택이 비어 있음)
+    class EmptyIntStackException : RuntimeException()
+
+    //실행 시 예외 (스택이 가득 참)
+    class OverflowIntStackException : RuntimeException()
+
+    fun push(data: Int): Int {
+        if (ptr >= max) throw OverflowIntStackException()
+        return data.also { stk[ptr++] = it }
+    }
+
+    fun pop(): Int {
+        if (ptr <= 0) throw EmptyIntStackException()
+        return stk[ptr--]
+    }
+
+    fun peak(): Int { 
+        if (ptr <= 0) throw EmptyIntStackException()
+        return stk[ptr - 1]
+    }
+
+    fun indexOf(element: Int): Int {
+        stk.forEachIndexed { index, i ->
+            if (i == element) return index
+        }
+        return -1
+    }
+
+    fun clear() {
+        ptr = 0
+    }
+
+    fun capacity(): Int = max
+    fun size(): Int = ptr
+    fun isEmpty(): Boolean = ptr <= 0
+    fun isFull(): Boolean = ptr >= max
+
+    fun dump() {
+        for (i in 0 until ptr) {
+            print("${stk[i]} ")
+        }
+        println()
+    }
+}
+```
+
+스택은 가장 나중에 넣은 데이터를 가장 먼저 꺼내는 후입선출(Last In First Out)의 방식으로 데이터의 입출력이 일어난다.
+
+스택에 데이터를 넣는 작업을 push, 꺼내는 작업을 pop이라고 한다.
+
+스택의 가장 윗 부분을 top, 아랫 부분을 bottom이라고 한다.
+
+자바 프로그램에서 메소드가 호출될 때 내부적으로 스택 방식을 사용한다.
+
+
 
