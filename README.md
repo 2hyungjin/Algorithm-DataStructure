@@ -344,5 +344,82 @@ class IntStack(capacity: Int) {
 
 자바 프로그램에서 메소드가 호출될 때 내부적으로 스택 방식을 사용한다.
 
+## 큐
+
+```kotlin
+class IntQueue(capacity: Int) {
+    val max = capacity
+    var front = 0
+    var rear = 0
+    var num = 0
+    val que = IntArray(capacity)
+
+    class EmptyIntQueueException : RuntimeException()
+    class OverflowIntQueueException : RuntimeException()
+
+    fun enqueue(data: Int): Int {
+        if (num >= max) throw OverflowIntQueueException()
+        que[rear] = data
+        num++
+        rear = (rear + 1) % max
+
+        return data
+    }
+
+    fun dequeue(): Int {
+        if (num <= 0) throw EmptyIntQueueException()
+        val data = que[front++]
+        num--
+        front = (front + 1) % max
+        return data
+    }
+
+    fun peek(): Int {
+        if (num <= 0) throw EmptyIntQueueException()
+        return que[rear]
+    }
+
+    fun indexOf(element: Int): Int {
+        for (i in 0..num) {
+            val index = (i + front) % max
+        }
+        return -1
+    }
+
+    fun clear() {
+        num = 0
+        front = 0
+        rear = 0
+    }
+
+    fun capacity() = max
+    fun size() = num
+    fun isEmpty() = num <= 0
+    fun isFull() = num >= max
+
+    fun dump() {
+        if (num <= 0) println("큐가 비어있음")
+        else {
+            for (i in 0 until num) {
+                print("${que[(i + front) % max]} ")
+            }
+            println()
+        }
+    }
+}
+```
+
+큐는 가장 먼저 넣은 데이터를 가장 먼저 꺼내는 선입선출(First In First Out)의 방식으로 데이터의 입출력이 일어난다.
+
+큐에 데이터를 넣는 작업을 enqueue, 꺼내는 작업을 dequeue라고 한다.
+
+데이터를 꺼내는 쪽을 front, 넣는 쪽을 rear라고 한다.
+
+데이터를 꺼낼 때마다 배열 요소를 앞으로 옮겨야 하는 작업이 귀찮으므로 링 버퍼를 사용한다.
+
+링 버퍼는 배열의 처음과 끝이 연결되었다고 보는 자료구조이다.
+
+링 버퍼를 활용한 큐에서는 front와 rear가 같고 현재 데이터 양이 최대 데이터 양과 같으면 큐가 가득 찬 상태입니다.
+
 
 
