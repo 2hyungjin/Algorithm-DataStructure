@@ -1,5 +1,6 @@
 package array
 
+
 fun translateCardinalNumber(num: Int, cardinalNumber: Int): String {
     val dchar = "0123456789ABCDEF"
     var num = num
@@ -14,5 +15,4 @@ fun translateCardinalNumber(num: Int, cardinalNumber: Int): String {
 
 fun main() {
     println(translateCardinalNumber(32, 16))
-
 }
