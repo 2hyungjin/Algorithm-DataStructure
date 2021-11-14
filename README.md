@@ -448,3 +448,27 @@ fun getGcd(x: Int, y: Int): Int = if (x % y == 0) y else getGcd(y, x % y)
 
 나누어지지 않는다면 작은 값에 대해 나누어떨어질 때까지 같은 과정을 반복한다.
 
+### 꼬리 재귀
+
+```kotlin
+fun fibonacci(n: Int): Int = if (n == 1 || n == 2) 1 else fibonacci(n - 1) + fibonacci(n - 2)
+
+tailrec fun fibonacci(n: Int, first: Int = 1, second: Int = 1): Int {
+    return if (n == 2)second  else fibonacci(n - 1, second, first + second)
+}
+```
+
+꼬리 재귀는 재귀 호출의 결과에 연산을 하지 않고 결과만 반환하는 방법이다.
+
+코틀린 컴파일러에서는 tailrec 키워드를 사용하여 꼬리 재귀 함수를 최적화할 수 있다. 
+
+재귀 함수를 반복문으로 바꾸어주기 때문에 재귀 함수의 스택 오버플로우 문제를 해결할 수 있다.
+
+### 하노이 탑
+
+
+
+
+
+
+
