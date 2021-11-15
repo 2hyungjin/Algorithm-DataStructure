@@ -466,9 +466,25 @@ tailrec fun fibonacci(n: Int, first: Int = 1, second: Int = 1): Int {
 
 ### 하노이 탑
 
+```kotlin
+fun hanoi(n: Int, from: Int = 1, to: Int = 3) {
+    var by = 6 - (from + to)
+    if (n == 1) println("$n : $from -> $to")
+    else {
+        hanoi(n - 1, from, by)
+        println("$n : $from -> $to")
+        hanoi(n - 1, by, to)
+    }
+}
+```
 
+n 개의 원판을 from에서 to로 옮기는 방법 
 
+1. n - 1개를 중간 단계의 막대기로 옮김
+2. n 번째 원반을 to로 옮김
+3. 중간 단계의  n - 1을 to로 옮김
 
+### 8퀸
 
 
 
