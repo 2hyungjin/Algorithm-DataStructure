@@ -478,7 +478,7 @@ fun hanoi(n: Int, from: Int = 1, to: Int = 3) {
 }
 ```
 
-n 개의 원판을 from에서 to로 옮기는 방법 
+n개의 원판을 from에서 to로 옮기는 방법 
 
 1. n - 1개를 중간 단계의 막대기로 옮김
 2. n 번째 원반을 to로 옮김
@@ -486,5 +486,104 @@ n 개의 원판을 from에서 to로 옮기는 방법
 
 ### 8퀸
 
+```kotlin
+fun getEightQueen(column: Int = 8) {
+    var answer = 0
 
+
+    fun setQueen(n: Int, FLAG_COL: BooleanArray, FLAG_CROSS_LEFT: BooleanArray, FLAG_CROSS_RIGHT: BooleanArray) 		{
+        for (i in 0 until column) {
+            if (FLAG_COL[i] && FLAG_CROSS_LEFT[i + n] && FLAG_CROSS_RIGHT[n - i + 7]) {
+
+                FLAG_COL[i] = false
+                FLAG_CROSS_LEFT[i + n] = false
+                FLAG_CROSS_RIGHT[n - i + 7] = false
+
+                if (n == 7) answer++
+                else setQueen(n + 1, FLAG_COL, FLAG_CROSS_LEFT, FLAG_CROSS_RIGHT)
+
+                FLAG_COL[i] = true
+                FLAG_CROSS_LEFT[i + n] = true
+                FLAG_CROSS_RIGHT[n - i + 7] = true
+            }
+        }
+
+    }
+
+    setQueen(0, BooleanArray(8) { true }, BooleanArray(15) { true }, BooleanArray(15) { true })
+    println(answer)
+
+}
+```
+
+8개의 퀸을 서로 죽이지 않고 놓는 방법
+
+1. 첫 번째 행부터 마지막 행까지 퀸을 놓음
+2. 첫 번째 열부터 8번쨰 열까지 놓는 과정을 모두 재귀적으로 호출함
+3. 해당 열에 퀸이 없거나(FLAG_COL), 왼쪽 대각선에 퀸이 없거나(FLAG_CROSS_LEFT), 오른쪽 대각선에 퀸이 없을 경우(FLAG_CROSS_RIGHT) 그 칸에만 퀸을 놓을 수 있음
+4. 퀸을 놓으면 해당 열(i), 왼쪽 대각선(i+n), 오른쪽 대각선(n-i+7)의 FLAG를 false로 만듦 (해당 열, 대각선에 포함된 칸은 퀸을 놓지 못함)
+5. 호출이 끝나면 다시 true로 바꿈
+6. 7번째 칸을 놓게 될 경우 답을 하나 증가시킴
+
+## 정렬
+
+key의 대소 관계에 따라 데이터 집합을 일정한 순서로 줄지어 늘어서도록 바꾸는 작업
+
+안정된 정렬 : 같은 값의 키를 가진 요소 순서가 정렬 전후에도 유지됨
+
+불안정한 정렬 : 같은 키를 가져도 요소 순서의 순서가 확신되지 않음
+
+내부 정렬 : 정렬할 모든 데이터를 하나의 배열에 저장할 수 있는 경우 사용
+
+외부 정렬 : 정렬할 데이터가 너무 많아 하나의 배열에 저장할 수 없는 경우 사용
+
+### 버블 정렬
+
+```kotlin
+fun sortByBubble(array: IntArray): IntArray {
+    for (i in array.indices) {
+        for (j in  0 until array.lastIndex - i)
+            if (array[j] >= array[j + 1]) {
+                val temp = array[j]
+                array[j] = array[j + 1]
+                array[j + 1] = temp
+            }
+    }
+    return array
+}
+```
+
+이웃한 두 요소의 대소 관계를 비교하여 다음 인덱스의 수보다 현재 수가 더 크면 두 수를 교환
+
+n개의 배열의 경우 처음은 n-1개의 수를 비교하여 배열의 가장 큰 수를 맨 끝으로 이동
+
+다음 부터는 n-2..n-3..개의 수를 비교하며 배열을 오름차순으로 정렬
+
+#### 개선(1)
+
+```kotlin
+fun sortByBubbleV2(array: IntArray): IntArray {
+    var cnt = 0
+    for (i in array.indices) {
+        var flag = false
+        for (j in 0 until array.lastIndex - i) {
+            cnt++
+            if (array[j] >= array[j + 1]) {
+                val temp = array[j]
+                array[j] = array[j + 1]
+                array[j + 1] = temp
+
+                flag = true
+            }
+        }
+        if (!flag) break
+    }
+    println("비교 횟수 $cnt")
+    return array
+}
+```
+
+교환이 한 번도 실행되지 않았을 경우, 이미 정렬된 배열이므로 비교를 멈춤
+
+#### 개선(2)
 
