@@ -628,11 +628,43 @@ fun sortByInsertion(array: IntArray): IntArray {
 
 오름차순일 경우 자신보다 작은 수와 큰 수 사이에 삽입하는 방법
 
+### Quick Sort
+
+
 ### Merge Sort
 
 ```kotlin
+fun sortByQuick(array: IntArray, start: Int = 0, end: Int = array.lastIndex): IntArray {
+    val part = partition(array, start, end)
+
+    if (start < part - 1) sortByQuick(array, start, part - 1)
+
+    if (part < end) sortByQuick(array, part, end)
+    return array
+}
+
+fun partition(array: IntArray, start: Int, end: Int): Int {
+    var l = start
+    var r = end
+    var pivot = array[(l + r) / 2]
+    while (l <= r) {
+        while (array[l] < pivot) l++
+        while (array[r] > pivot) r--
+        if (l <= r) swap(array, l++, r--)
+    }
+    return l
+}
 ```
 
+피벗을 설정하여 피벗보다 작은 그룹과 큰 그룹으로 나눈다.
+
+그룹 내에서 피펏을 또 설정, 나눔을 반복하며 각 그룹이 1명이 되면 정렬을 마친다.
+
+피벗을 정하면 배열을 피벗을 기준으로 왼쪽(피벗>수) 오른쪽(피벗<수)으로 나누어 조건에 맞게 수를 교환한다.
+
+
+
+.
 
 
 
