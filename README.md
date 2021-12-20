@@ -559,7 +559,7 @@ n개의 배열의 경우 처음은 n-1개의 수를 비교하여 배열의 가�
 
 다음 부터는 n-2..n-3..개의 수를 비교하며 배열을 오름차순으로 정렬
 
-#### 개선(1)
+#### 개선
 
 ```kotlin
 fun sortByBubbleV2(array: IntArray): IntArray {
@@ -583,7 +583,26 @@ fun sortByBubbleV2(array: IntArray): IntArray {
 }
 ```
 
-교환이 한 번도 실행되지 않았을 경우, 이미 정렬된 배열이므로 비교를 멈춤
+교환이 한 번도 실행되지 않았을 경우, 이미 정렬된 배열이므로 비교를 멈춤.
 
-#### 개선(2)
+### 선택 정렬
+
+```kotlin
+fun sortBySelection(array: IntArray): IntArray {
+    var array = array
+    array.forEachIndexed { index, i ->
+        var least = i
+        for (j in index..array.lastIndex) {
+            least = if (array[j] < least) array[j] else least
+        }
+        swap(array, index, array.indexOf(least))
+    }
+    return array
+}
+```
+
+수를 선택하여 적절한 인덱스로 옮긴다.
+
+오름차순일 경우 최솟값을 0번 인덱스로, 그 다음 작은 수를 1번 인덱스로 옮기는 방법
+
 
