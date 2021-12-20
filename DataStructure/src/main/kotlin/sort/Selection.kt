@@ -1,7 +1,6 @@
 package sort
 
 fun sortBySelection(array: IntArray): IntArray {
-    var array = array
     array.forEachIndexed { index, i ->
         var least = i
         for (j in index..array.lastIndex) {

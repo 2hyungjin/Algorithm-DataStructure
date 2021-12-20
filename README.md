@@ -537,7 +537,7 @@ key의 대소 관계에 따라 데이터 집합을 일정한 순서로 줄지어
 
 외부 정렬 : 정렬할 데이터가 너무 많아 하나의 배열에 저장할 수 없는 경우 사용
 
-### 버블 정렬
+### Bubble Sort
 
 ```kotlin
 fun sortByBubble(array: IntArray): IntArray {
@@ -585,11 +585,10 @@ fun sortByBubbleV2(array: IntArray): IntArray {
 
 교환이 한 번도 실행되지 않았을 경우, 이미 정렬된 배열이므로 비교를 멈춤.
 
-### 선택 정렬
+### Selection Sort
 
 ```kotlin
 fun sortBySelection(array: IntArray): IntArray {
-    var array = array
     array.forEachIndexed { index, i ->
         var least = i
         for (j in index..array.lastIndex) {
@@ -604,5 +603,36 @@ fun sortBySelection(array: IntArray): IntArray {
 수를 선택하여 적절한 인덱스로 옮긴다.
 
 오름차순일 경우 최솟값을 0번 인덱스로, 그 다음 작은 수를 1번 인덱스로 옮기는 방법
+
+### Insertion Sort
+
+```kotlin
+fun sortByInsertion(array: IntArray): IntArray {
+    array.forEachIndexed { index, i ->
+        var j = index
+        while (j > 0 && array[j - 1] > i){
+            array[j] = array[j - 1]
+            j--
+        }
+        array[j] = i
+    }
+    return array
+}
+```
+
+카드의 순서를 바꾸는 것과 비슷한 방법
+
+선택 정렬과 유사하지만선택한 요소를 알맞은 위치에 삽입한다.
+
+수를 선택하여 해당 인덱스의 아래 수들과 비교하여 알맞은 위치에 삽입한다.
+
+오름차순일 경우 자신보다 작은 수와 큰 수 사이에 삽입하는 방법
+
+### Merge Sort
+
+```kotlin
+```
+
+
 
 
