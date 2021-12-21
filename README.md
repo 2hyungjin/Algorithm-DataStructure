@@ -662,6 +662,8 @@ fun partition(array: IntArray, start: Int, end: Int): Int {
 
 ### Merge Sort
 ```kotlin
+lateinit var sorted: IntArray
+
 fun sortByMerge(array: IntArray) {
     sorted = IntArray(array.size)
 
