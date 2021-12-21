@@ -704,7 +704,7 @@ fun merge(array: IntArray, left: Int, right: Int) {
 분할 정복을 사용한 방법
 
 정렬의 방식 또한 배열을 앞 뒤로 나누는 함수를 호출하는 것으로 한다. (배열 크기가 2보다 크다면)
-.
+
 
 
 
