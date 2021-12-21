@@ -12,6 +12,7 @@ fun sortByQuick(array: IntArray, start: Int = 0, end: Int = array.lastIndex): In
 fun partition(array: IntArray, start: Int, end: Int): Int {
     var l = start
     var r = end
+
     var pivot = array[(l + r) / 2]
     while (l <= r) {
         while (array[l] < pivot) l++

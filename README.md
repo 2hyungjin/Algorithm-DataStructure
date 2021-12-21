@@ -630,9 +630,6 @@ fun sortByInsertion(array: IntArray): IntArray {
 
 ### Quick Sort
 
-
-### Merge Sort
-
 ```kotlin
 fun sortByQuick(array: IntArray, start: Int = 0, end: Int = array.lastIndex): IntArray {
     val part = partition(array, start, end)
@@ -663,7 +660,50 @@ fun partition(array: IntArray, start: Int, end: Int): Int {
 피벗을 정하면 배열을 피벗을 기준으로 왼쪽(피벗>수) 오른쪽(피벗<수)으로 나누어 조건에 맞게 수를 교환한다.
 
 
+### Merge Sort
+```kotlin
+fun sortByMerge(array: IntArray) {
+    sorted = IntArray(array.size)
 
+    sortByMerge(array, 0, array.lastIndex)
+}
+
+private fun sortByMerge(array: IntArray, left: Int, right: Int) {
+    if (left < right) {
+        val mid = (left + right) / 2
+        sortByMerge(array, left, mid)
+        sortByMerge(array, mid + 1, right)
+
+        merge(array, left, right)
+    }
+}
+
+fun merge(array: IntArray, left: Int, right: Int) {
+    var mid = (left + right)/2
+
+    var lStart = left
+    var rStart = mid + 1
+
+    var sortedIndex = left
+
+
+    while (lStart <= mid && rStart <= right) {
+        sorted[sortedIndex++] = if (array[lStart] < array[rStart]) array[lStart++] else array[rStart++]
+    }
+    while (lStart <= mid) sorted[sortedIndex++] = array[lStart++]
+    while (rStart <= right) sorted[sortedIndex++] = array[rStart++]
+
+    for (i in left..right)array[i]= sorted[i]
+}
+```
+
+배열의 앞과 뒤를 나누어 각각 정렬한 다음 병합하는 작업을 반복하여 정렬하는 방법
+
+정렬을 마친 두 배열을 비교하여 작은 값을 순서대로 꺼내 새로운 배열에 넣는다.
+
+분할 정복을 사용한 방법
+
+정렬의 방식 또한 배열을 앞 뒤로 나누는 함수를 호출하는 것으로 한다. (배열 크기가 2보다 크다면)
 .
 
 
