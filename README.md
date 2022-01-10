@@ -707,6 +707,85 @@ fun merge(array: IntArray, left: Int, right: Int) {
 
 정렬의 방식 또한 배열을 앞 뒤로 나누는 함수를 호출하는 것으로 한다. (배열 크기가 2보다 크다면)
 
+## 트리
 
+노드(구성 요소)와 이를 잇는 엣지(간선)으로 이루어진다.
+
+트리는 사이클을 가질 수 없다.
+
+하나의 루트 노드를 갖고 노드들은 0개 이상의 자식 노드들을 갖는다.
+
+더 이상 자식이 없는 노드를 리프라고 한다.
+
+트리의 균형이 지나치게 치우치지 않으면 이를 균형있는(balanced) 트리라고 한다.
+
+### 이진 트리
+```kotlin
+data class Node<T>(
+    var data: T? = null,
+    var left: Node<T>? = null,
+    var right: Node<T>? = null,
+)	
+data class BinaryTree<T>(
+    var root: Node<T>? = null,
+) {
+    fun makeNode(left: Node<T>?, data: T, right: Node<T>?) : Node<T>{
+        val node = Node<T>()
+        node.data = data
+        node.left = left
+        node.right = right
+        return node
+    }
+
+    fun inOrder(node: Node<T>?) {
+        node?.run {
+            inOrder(left)
+            println(data)
+            inOrder(right)
+        }
+    }
+
+    fun preOrder(node: Node<T>?) {
+        node?.run {
+            println(data)
+            preOrder(left)
+            preOrder(right)
+        }
+    }
+
+    fun postOrder(node: Node<T>?) {
+        node?.run {
+            postOrder(left)
+            postOrder(right)
+            println(data)
+        }
+    }
+}
+
+```
+
+자식 노드가 2개까지만 붙는 경우 이진 트리라고 한다.
+
+#### 이진 검색 트리
+
+이진 트리의 데이터가 자신의 왼쪽 노드들은 자신보다 작고
+
+자신보다 오른쪽 노드들은 자신보다 커야한다.
+
+이를 이용하여 자신보다 큰 수를 검색하고 싶은 경우 오른쪽을 탐색하면 된다.
+
+### 이진 트리의 순회
+
+#### Inorder
+
+루트 노드를 기준으로 왼쪽, 루트, 오른쪽 순서대로 순회한다.
+
+#### Preorder
+
+루트 노드를 기준으로 루트, 왼쪽, 오른쪽 순서대로 순회한다.
+
+#### Postorder
+
+루트 노드를 기준으로 왼쪽, 오른쪽 루트 순서대로 순회한다.
 
 
