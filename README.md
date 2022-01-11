@@ -788,4 +788,75 @@ data class BinaryTree<T>(
 
 루트 노드를 기준으로 왼쪽, 오른쪽 루트 순서대로 순회한다.
 
+## 힙
+
+완전 이진 트리의 일종으로 최대 혹은 최소 값을 쉽게 구할 수 있다.
+
+검색 이동이 쉽도록 배열로 구현한다.
+
+배열로 구현한 힙은 다음과 같은 성질을 지닌다. (구현하기 쉽게 1번 인덱스 부터 사용)
+
+- 부모의 인덱스  = 자식의 인덱스 / 2
+- 왼쪽 자식의 인덱스 = 부모의 인덱스 * 2
+- 오른쪽 자식의 인덱스 = 부모의 인덱스 * 2 + 1
+
+```kotlin
+class MinHeap {
+    private var heapArray: IntArray = intArrayOf(Int.MIN_VALUE)
+    var size: Int = 0
+    val ROOT = 1
+
+    fun parent(index: Int) = index / 2
+    fun left(index: Int) = index * 2
+    fun right(index: Int) = index * 2 + 1
+
+    fun swap(from: Int, to: Int) {
+        val temp = heapArray[from]
+        heapArray[from] = heapArray[to]
+        heapArray[to] = temp
+    }
+
+    fun insert(data: Int) {
+        heapArray += data
+        var current = ++size
+
+        while (heapArray[current] < heapArray[parent(current)]) {
+            swap(current, parent(current))
+            current = parent(current)
+        }
+    }
+
+    fun delete(): Int {
+        if (size <= 0) return 0
+
+        val root = heapArray[ROOT]
+
+        heapArray[ROOT] = heapArray[size--]
+
+        var pos = ROOT
+
+        while (left(pos) <= size) {
+            val min = if (heapArray[left(pos)] < heapArray[right(pos)]) left(pos) else right(pos)
+            swap(min, pos)
+            pos = min
+        }
+        return root
+    }
+
+    fun print(){
+        for (i in 1..size){
+            println(heapArray[i])
+        }
+    }
+
+}
+```
+
+### 최소 힙
+
+루트에 가장 작은 값이 오는 힙
+
+### 최대 힙
+
+루트에 가장 큰 값이 오는 힙
 
